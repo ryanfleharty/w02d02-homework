@@ -1,5 +1,5 @@
 
-const deck = [{
+const cards = [{
     name: "Bulbasaur",
     damage: 60
 }, {
@@ -53,27 +53,34 @@ const deck = [{
 }, {
     name: "Weedle",
     damage: 40
-}],
+}]
+
 const player = {
     name: "Egbert",
-    currentCard: {},
-    playerDeck: [],
+    dealt: [],
+    deck: [],
     roundsWon: 0,
     attack(){
         console.log('ATTACK');
     },
 }
 
-const cpu = {
-    name: "The Computer",
-    currentCard: {},
-    cpuDeck: [],
-    roundsWon: 0,
-    randomAttack(){
-        console.log('Random Attack!!')
-    }
-}
+// const cpu = {
+//     name: "The Computer",
+//     dealt: [],
+//     deck: [],
+//     roundsWon: 0,
+//     deal(){
+//         for (let i = 0; i <= cards.length; i++) {
+//             return this.dealt.push([i]*))
+//         }
+//     },
+
+//     randomAttack(){
+//         console.log('Random Attack!!')
+//     }
+// }
 
 
 
-
+console.log(cards[Math.floor(Math.random()*cards.length)].name)
