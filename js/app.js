@@ -1,4 +1,5 @@
-[{
+
+const deck = [{
     name: "Bulbasaur",
     damage: 60
 }, {
@@ -52,16 +53,27 @@
 }, {
     name: "Weedle",
     damage: 40
-}]
-class Player {
-    constructor(name,currentCard,previousCards,roundsWon,attack){
-        this.name = name
-        this.currentCard = currentCard;
-        this.previousCards = previousCards;
-        this.roundsWon = roundsWon
-        this.attack = attack
+}],
+const player = {
+    name: "Egbert",
+    currentCard: {},
+    playerDeck: [],
+    roundsWon: 0,
+    attack(){
+        console.log('ATTACK');
+    },
+}
+
+const cpu = {
+    name: "The Computer",
+    currentCard: {},
+    cpuDeck: [],
+    roundsWon: 0,
+    randomAttack(){
+        console.log('Random Attack!!')
     }
 }
 
-const egbert = new Player("Egbert",{},[],0,attack());
-const cpu = new Player("Computer",{},[],0,randomAttack());
+
+
+
