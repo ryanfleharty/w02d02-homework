@@ -194,7 +194,7 @@ const battleField = [];
 
 // player
 const player = {
-  name: "changethis",//prompt("Please enter your name"),
+  name: prompt("Please enter your name"),
   hand: [],
   roundsWon: 0,
 }
@@ -204,7 +204,7 @@ let rounds = 0;
 
 // computer
 const computer = {
-  name: "changethis2",//prompt("Please enter your rival's name"),
+  name: prompt("Please enter your rival's name"),
   hand: [],
   roundsWon: 0,
 }
