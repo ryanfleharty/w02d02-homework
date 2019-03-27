@@ -1,7 +1,6 @@
 console.log("Pokemon Game");
 //Pokemon cards--array of objects!
 
-// PSEUDOCODE
 // 1. keep a library of all the Pokemon cards that can be played (see the array in the "The Cards" section)
 const game = {
     deck: [
@@ -63,7 +62,7 @@ const game = {
       ],
       cardsPlayed: [],
       cardsLeft: 18,
-      currentRound: 1,
+      round: 1,
       wins: {
           player: 0,
           computer: 0
@@ -91,7 +90,7 @@ console.log(game.deck[0].name); // ==> Bulbasaur
     // *** This will need to be a function with loops, conditionals, and other crazy things
 
 // 5. track rounds
-    // game.currentRound starts at one and will need to be counted up once a round
+    // game.round starts at one and will need to be counted up once a round
 
 // 6. track number of rounds won for both player and computer
     // game.wins.player/computer holds values of zero 
@@ -106,4 +105,32 @@ console.log(game.deck[0].name); // ==> Bulbasaur
 
 // 9. stop once there are no cards left or not enough to deal 3 to each the player and computer
     // function that maybe needs to be outside of the the object? 
+
+const player = {
+    stats: {
+        points: 0,
+        roundsWon: 0
+    },
+    currentHand: [],
+    playCard(){
+
+    },
+    cardsPlayed: []
+};
+
+// 1. see their stats: their points and how many rounds they've won.
+
+// 2. see what cards they have been dealt/see what cards are left in their hand
+    // currentHand is an array into which card objects will be pushed by dealThree.
+    // MUST be cleared each time a number is added to game.round
+
+// 3. pick a card from the hand that has been dealt to them (thereby playing this 
+    // card agaist the computer's card). The round ends once this has happened 3 times.
+    // FUNCTION that prompts the user to choose one of three cards. 
+
+// 4. receive new cards given to them by the game each round.
+    // dealThree will repopulate the cleared currentHand
+
+// 5. see the cards that they have played in the past.
+    // each card played will get pushed into player.cardsPlayed
 
