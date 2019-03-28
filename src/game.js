@@ -105,7 +105,7 @@ const playerTurn = () => {
 let input = prompt(message)
 let playedCard = player.hand.splice(input, 1)[0]
 player.currentCard = playedCard
-debugger
+
 }
 const opponentTurn = () => {
   const oppInput = Math.floor(Math.random() * opponent.hand.length)
@@ -141,6 +141,7 @@ const startRound = () => {
   totalRounds += 1
   reset()
 }
+
 const determineRoundWinner = () => {
   if (player.score < opponent.score){
     opponent.wins += 1
@@ -165,10 +166,3 @@ const startGame = () => {
 
 
 }
-
-// const startRound = () => { //create function
-//   playerChooses();
-//   oppenentChooses();
-//   compareChoices();
-//   restart();
-// }
