@@ -67,6 +67,8 @@ const player = {
      name: "Eggbert",
      score: 0,
      cards: [],
+     cardsTwo:[],
+     cardsThree:[],
      cardInPlay:"",
 }
 //computer object
@@ -74,8 +76,13 @@ const computer = {
     name: "Computer",
     score: 0,
     cards: [],
+    cardsTwo:[],
+    cardsThree:[],
     cardInPlay:""
 }
+console.log("1",player.cards)
+console.log("2",computer.cards)
+
 //player pick 3 cards 
 const getPlayerCards = () => {
     for (let i = 0; i < 3; i++){
@@ -104,40 +111,41 @@ const pickCardComputer = () => {
 pickCardPlayer();
 pickCardComputer();
 
+
 //compare card in play
 // const compare = () => {
 //     //if player wins
 const startGame = () => {
-    while (player.cards.length > 0 || computer.cards.length > 0){
-
-        if (player.cardInPlay.damage > computer.cardInPlay.damage){
+    if (player.cards.length > 0 || computer.cards.length > 0) {  // while(game.rounds < 3){
+  if (player.cardInPlay.damage > computer.cardInPlay.damage){
             console.log("point for player")
-            player.score =+1
-            //takes out last one in player cards
-            player.cards.pop()
-            computer.cards.pop()
+            player.score +=1
+            game.rounds +=1
+            player.cards.splice(0,1)
+            computer.cards.splice(0,1)
             console.log(player.cards)
-            //if computer wins
+      
         } else if (computer.cardInPlay.damage > player.cardInPlay.damage){
             console.log("point for computer")
-            computer.score =+1
-            //takes out last one in computer cards
-            computer.cards.pop()
-            player.cards.pop()
+            computer.score +=1
+            game.rounds +=1
+            computer.cards.splice(0,1)
+            player.cards.splice(0,1)
             console.log(computer.cards)
-        //if tie
+
         } else {
+
             console.log("Tie! Draw again!")
-            computer.cards.pop()
-            player.cards.pop()
+            game.rounds +=1
+            computer.cards.splice(0,1)
+            player.cards.splice(0,1)
             console.log(computer, player)
-            } 
-    }}
-
-
+    }}}
+startGame();
+    console.log(computer, player)
 
 //call card in play function
-//compare();
+
 const endround = ()=> {
     if (player.cards.length === 0 || computer.cards.length === 0){
         game.rounds =+1
@@ -146,18 +154,18 @@ const endround = ()=> {
     }}
 
 
-
 const reset = () => {
     if (game.rounds < 3){
         getPlayerCards();
         getComputerCards()
     }}
-startGame();
+
 endround();
-    // while (game.rounds < 3){
-    //     startGame();}
-    // endround();
-    // reset();
+
+while (game.rounds < 3){
+    startGame();
+    endround();
+    reset();}
 
 
 
