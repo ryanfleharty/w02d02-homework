@@ -2,26 +2,6 @@ console.log("Pokemon");
 
 
 
-// game deals 3 cards to the player
-// each card has a damage value
-// player picks one of the 3 cards
-// computer chooses a random card
-// 
-// if check which card has a higher damage value
-// whichever card has the higher value wins a point
-//
-// after the player cards array reaches zero, restart
-// 
-// variables needed: 
-// whowins each point - object with keys eggbert and computer
-// cards played discard pile
-// who wins each round stored
-// 
-// 
-
-
-
-
 const cards = [
     {
       name: "Bulbasaur",
@@ -80,59 +60,54 @@ const cards = [
     }
   ];
 
-// created variable to store the cards for each round
-// when cards are played/dealt, they are removed from this array, 
-// not original cards array
+
 
 let cardsEachRound = [];
 
 for (i = 0; i < cards.length; i++){
     cardsEachRound.push(cards[i]);
 };
-console.log(cardsEachRound);
+//console.log(cardsEachRound);
+
+let playerHand = [];
+const compHand = [];
+
+const gamePoints = {
+    player: 0,
+    comp: 0,
+    tie: 0
+};
+
+const roundPoints = {
+    player: 0,
+    comp: 0,
+    tie: 0
+};
+
+
+//DEAL FUNCTION
+const deal = () => {
+  for (let i = 0; i < 3; i++){
+      let randomCard = cardsEachRound[Math.floor(Math.random() * cardsEachRound.length)];
+      let indexRandCard = cardsEachRound.indexOf(randomCard);
+      playerHand.push(randomCard);
+      cardsEachRound.splice(indexRandCard, 1);
+
+      let randomCompCard = cardsEachRound[Math.floor(Math.random() * cardsEachRound.length)];
+      let indexRandCompCard = cardsEachRound.indexOf(randomCompCard);
+      compHand.push(randomCompCard);
+      cardsEachRound.splice(indexRandCompCard, 1);
+  }
+  
+};
+
+
 
 // playGame funciton houses the game. To start game, call playGame()
 const playGame = () => {
-    let playerHand = [];
-    const compHand = [];
-    
-    const gamePoints = {
-        player: 0,
-        comp: 0,
-        tie: 0
-    };
-    
-    const roundPoints = {
-        player: 0,
-        comp: 0,
-        tie: 0
-    };
-    
-
-    // THE DEAL FUNCTION
-    // loop generates random card from cardsEachRound, gets the index of the
-    // card generated, pushes to playerHand, and removes from cardsEachRound
-    
-    const deal = () => {
-        for (let i = 0; i < 3; i++){
-            let randomCard = cardsEachRound[Math.floor(Math.random() * cardsEachRound.length)];
-            let indexRandCard = cardsEachRound.indexOf(randomCard);
-            playerHand.push(randomCard);
-            cardsEachRound.splice(indexRandCard, 1);
-
-            let randomCompCard = cardsEachRound[Math.floor(Math.random() * cardsEachRound.length)];
-            let indexRandCompCard = cardsEachRound.indexOf(randomCompCard);
-            compHand.push(randomCompCard);
-            cardsEachRound.splice(indexRandCard, 1);
-        }
-        
-    };
 
     deal();
-    console.log(playerHand); 
-    console.log(cardsEachRound);
 
-    // DEFINES NEW ARR FOR CURRENT CARD IN PLAY
     let userCardsInPlay = [];
     
     // PICK A CARD FUNCTION PROMPTS USER TO ENTER ONE OF THEIR CARDS FROM THEIR HAND
@@ -144,21 +119,21 @@ const playGame = () => {
     
     Pick your card!`);
 
-    console.log(playerHand[0].name)
-    if (askUser === playerHand[0].name){
+    //console.log(playerHand[0].name)
+    if (askUser.toLowerCase() === playerHand[0].name.toLowerCase()){
         userCardsInPlay.push(playerHand[0])
         playerHand.splice(0, 1);
-    } else if (askUser === playerHand[1].name){
+    } else if (askUser.toLowerCase() === playerHand[1].name.toLowerCase()){
         userCardsInPlay.push(playerHand[1]);
         playerHand.splice(1, 1);
-    } else if (askUser === playerHand[2].name){
+    } else if (askUser.toLowerCase() === playerHand[2].name.toLowerCase()){
         userCardsInPlay.push(playerHand[2])
         playerHand.splice(2, 1);
     } else {
-        prompt("Please enter one of your cards")
+        pickACard();
     };
     
-    console.log(userCardsInPlay[0]);
+    //console.log(userCardsInPlay[0]);
     
 
     // if the string the user types === playerHand[0].name, then push playerHand[0] to cardsInPlay 
@@ -170,17 +145,8 @@ const playGame = () => {
 
     let compCardInPlay = [compHand[Math.floor(Math.random() * compHand.length)]];
     let indexCompCard = compHand.indexOf(compCardInPlay);
-    console.log(compCardInPlay);
     compHand.splice(indexCompCard, 1);
     
-    console.log(playerHand);
-    console.log(compHand);
-
-
-    console.log(userCardsInPlay[0].damage);
-    console.log(compCardInPlay[0].damage);
-    // right now both the player (userCardsInPlay), and computer (compCardInPlay)
-    // have selected their card to compare to each other
 
     if(userCardsInPlay[0].damage > compCardInPlay[0].damage){
         roundPoints.player++;
@@ -190,17 +156,17 @@ const playGame = () => {
         roundPoints.tie++;
     }
 
+    //END OF FIRST PLAY
+    alert(
+    `You played a ${userCardsInPlay[0].name} for ${userCardsInPlay[0].damage}
+    The computer played a ${compCardInPlay[0].name} for ${compCardInPlay[0].damage}
+    After play 1, you have ${roundPoints.player} points and the computer has ${roundPoints.comp}`);
     console.log(roundPoints);
-    console.log(`You played a ${userCardsInPlay[0].name} for ${userCardsInPlay[0].damage}`);
-    console.log(`The computer played a ${compCardInPlay[0].name} for ${compCardInPlay[0].damage}`);
-    console.log(`After play 1, you have ${roundPoints.player} points and the computer has ${roundPoints.comp}`);
-    //FIRST PLAY OF ROUND 1 ENDS HERE
 
-    //CLEARS CARDS IN PLAY ARRAYS
+
+    //CLEARS CARDS IN PLAY
     userCardsInPlay.pop();
-    //console.log(userCardsInPlay);
     compCardInPlay.pop();
-    //console.log(compCardInPlay);
     
     //START PLAY 2 OF ROUND 1 HERE
 
@@ -210,35 +176,25 @@ const playGame = () => {
         ${playerHand[1].name}, damage ${playerHand[1].damage}
         
         Pick your card!`);
-    
+  
         
-        if (askUser === playerHand[0].name){
+        if (askUser.toLocaleLowerCase() === playerHand[0].name.toLocaleLowerCase()){
             userCardsInPlay.push(playerHand[0])
             playerHand.splice(0, 1);
-        } else if (askUser === playerHand[1].name){
+        } else if (askUser.toLocaleLowerCase() === playerHand[1].name.toLocaleLowerCase()){
             userCardsInPlay.push(playerHand[1]);
             playerHand.splice(1, 1);
         } else {
-            prompt("Please enter one of your cards")
-        };
-        
-        console.log(userCardsInPlay);
+            pickASecondCard();
+        }
         }
 
         pickASecondCard();
         
-        //
         compCardInPlay.push(compHand[Math.floor(Math.random() * compHand.length)]);
         indexCompCard = compHand.indexOf(compCardInPlay);
-        console.log(compCardInPlay);
         compHand.splice(indexCompCard, 1);
         
-        console.log(playerHand);
-        console.log(compHand);
-    
-    
-        console.log(userCardsInPlay[0].damage);
-        console.log(compCardInPlay[0].damage);
 
         if(userCardsInPlay[0].damage > compCardInPlay[0].damage){
             roundPoints.player++;
@@ -248,18 +204,19 @@ const playGame = () => {
             roundPoints.tie++;
         }
 
+        //END OF PLAY 2
+        alert(`You played a ${userCardsInPlay[0].name} for ${userCardsInPlay[0].damage}.
+        The computer played a ${compCardInPlay[0].name} for ${compCardInPlay[0].damage}
+        After the second play, you have ${roundPoints.player} points and the computer has ${roundPoints.comp}. You have tied ${roundPoints.tie} times.`);
         console.log(roundPoints);
-        console.log(`You played a ${userCardsInPlay[0].name} for ${userCardsInPlay[0].damage}`);
-        console.log(`The computer played a ${compCardInPlay[0].name} for ${compCardInPlay[0].damage}`);
-        console.log(`After the second play, you have ${roundPoints.player} points and the computer has ${roundPoints.comp}. You have tied ${roundPoints.tie} times.`);
-        
-        //CLEARS CARDS IN PLAY ARRAYS
-        userCardsInPlay.pop();
-        compCardInPlay.pop();
+
+        // //CLEARS CARDS IN PLAY ARRAYS
+        // userCardsInPlay.pop();
+        // compCardInPlay.pop();
 
         //END OF PLAY 2 FOR ROUND 1
 
-                //START PLAY 3 FOR ROUND 1
+        //START PLAY 3 FOR ROUND 1
 
         alert(`Your only card left is ${playerHand[0].name}, hit OK to set it loose!`);
         
@@ -270,26 +227,68 @@ const playGame = () => {
         } else {
             roundPoints.tie++;
         };
-
+        
+        //END OF PLAY 3 
+        alert(`You played a ${playerHand[0].name} for ${playerHand[0].damage}. The computer played a ${compHand[0].name} for ${compHand[0].damage} After 3 plays, you have ${roundPoints.player} points and the computer has ${roundPoints.comp} with ${roundPoints.tie} ties.`);
         console.log(roundPoints);
+        
+
         if (roundPoints.player > roundPoints.comp){
-            console.log('You won the first round!');
+            alert('You won the third play!');
+            console.log('You won the third play!');
             gamePoints.player++;
         } else if (roundPoints.player < roundPoints.comp){
-            console.log('The computer won the first round');
+            alert('The computer won the third play');
+            console.log('The computer won the third play');
             gamePoints.player++;
         } else {
-            console.log('The first round was a tie');
+            alert('The third play was a tie')
+            console.log('The third play was a tie');
             gamePoints.tie++;
         };
 
-        console.log(`The current score is You: ${gamePoints.player}, Computer: ${gamePoints.comp}, with ${gamePoints.tie} ties`);
 
+        console.log(`The current score is You: ${gamePoints.player} games, Computer: ${gamePoints.comp} games, with ${gamePoints.tie} tie games`);
+        console.log(roundPoints);
+        
+        userCardsInPlay.pop();
+        compCardInPlay.pop();
+        playerHand.pop();
+        compHand.pop();
+
+        cardsEachRound = cards;
         
 
-
-
+        
+        roundPoints.player = 0;
+        roundPoints.comp = 0;
+        roundPoints.tie = 0;
 
 }
 
-playGame();
+const start = () => {
+  for (let i = 0; i < 2; i++){
+    playGame();
+    if (i === 1){
+      playGame();
+      whoWon();
+    }
+  }
+}
+
+
+
+const whoWon = () => {
+  if(gamePoints.player > gamePoints.comp){
+     alert("YOU WON THE GAME! GREAT JOB!");
+     console.log("YOU WON THE GAME");
+  } else if (gamePoints.player < gamePoints.comp){
+     alert("THE COMPUTER WON, TRY AGAIN NEXT TIME...");
+     console.log("THE COMPUTER WON THE GAME")
+  } else {
+     alert("IT ENDED UP BEING A TIE... NOBODY WANTED THIS :(")
+  }
+};
+
+
+

@@ -1,0 +1,22 @@
+div, p {
+    border-bottom: 1px solid black;
+    max-width: 300px;
+    background-color: #d2d8e0;
+    margin: 0 auto;
+    text-align: center;
+}
+
+img {
+    max-width: 300px;
+}
+
+body {
+    float: left;
+}
+
+p {
+    padding: 10px;
+    font-weight: 700;
+    max-width: 300px;
+}
+
