@@ -1,112 +1,18 @@
 // POKEMON HOMEWORK
 
+/* UPDATES
 
-/* PSUEDO
+- use the user prompt more
+- have each round consist of three battles (use each card once)
+- have a display that shows both players current hands, rounds, etc, in html. (get rid of seeHand() function)
+- change drawCard() to drawThreeCards()
+- make each round more obvious start/end
+- add a start game button
 
+- use if (prompt === x) {run function} to make it user friendly!!
 
-**EXTRA THING**
-add a random multiplier that adds a random number between (-5) thru 15 to a cards attack
-*********
-
-
-        **GAME PROCESS**
-
-PROCESS 1 (game start)
-
---Player is prompted to input their name
---Player is asked to start the game
-
-PROCESS 2 (dealing cards)
-
---Player is delt 3 random cards--
-
-              *create a deal function
-
-    -cards are removed from the deck
-    -cards are placed in player's hand
-
-              *player is notified of their cards
-
---Computer is delt 3 random cards--
-
-    -cards are removed from the deck
-    -cards are placed in computer's hand
-
-PROCESS 3 (playing cards)
-
---Player chooses card to play--
-
-              *create playerPlays function w/ the parameter as the card
-
-    -chosen card goes into play
-
-              *Random Multiplier applied to the card
-
---computer randomly plays a card----
-
-              *create computerPlays function that runs when player plays
-
-    -randomly chosen card goes into play
-
-              *random multiplier applied to card
-
-              *Notify which cards are in play, along w/ thier values
-              *log each card's attack
-
-PROCESS 4 (recording winner)
-
---the player who played the card with the higher damage value wins--
-
-    -card damage values are compared
-
---the winner is displayed--
-
-    -the score is recorded
-    -all six active cards are discarded
-
-              *player is instructed to begin the next round
-
-PROCESS 5 (finishing round)
-
---the round ends and round number/rounds-won is displayed--
-
---the whole process repeates--
-
-              *If there are no more cards left in the deck...
-
---the final winner is displayed and the game is over--
-
-    -the game is reset
-
-              *the player is asked if they would like to play again
-
-      **GAME ITEMS**
-
---Stats object necissary-- (type stats to see it)
-    -records current round and points
-    -records the cards that are in their hand
-    -records the discarded cards
-    -records the cards left in the deck
-
---Unplayed deck of cards object--
-
---Player object--
-    -contains cards in hand
-    -contains current score
-
---Computer Object--
-    -contains cards in hand
-    -contains current score
-
---Discarded/Used cards--
-
---Score--
-    -contains each player's Score
-    -contains the current round
 
 */
-
-
 
 // DEFINING OBJECTS
 
@@ -224,7 +130,6 @@ const randomCard = (user) => {
 
 
 const drawCard = () => {
-
     setTimeout(function(){
       console.log(`${player.name} drew a card!`)
     randomCard(player);
@@ -233,15 +138,16 @@ const drawCard = () => {
     setTimeout(function(){
       console.log(`${computer.name} drew a card!`)
     randomCard(computer);
-  }, 1000)
+  }, 2000)
 
 setTimeout(function(){
   if (computer.hand.length === 3) {
-      console.log('You have chosen 3 Pokémon! Type "seeHand()" to see their information!');
+      console.log("You have chosen 3 Pokémon!");
+      seeHand();
     } else {
-      console.log("Please draw another card!");
+      drawCard();
     }
-  }, 1500)
+  }, 3000)
 
     return '""""""""""""""""'
 }
@@ -250,9 +156,15 @@ setTimeout(function(){
 
 const seeHand = () => {
   console.log(player.hand);
-  console.log("Choose which Pokémon to send into battle! The higher the damage the better the Pokémon!");
-  console.log(`Type "iChooseYou('Name-Of-Pokemon')" to make your choice`);
+  let choice = prompt(`Choose which Pokémon to send into battle!\n${player.hand[0].name},${player.hand[1].name}, or ${player.hand[2].name}`);
+  for (i = 0; i < 3; i++){
+  if (choice === player.hand[0].name ||choice === player.hand[1].name ||choice === player.hand[2].name){
+  iChooseYou(choice);
+} else {
+  seeHand()
+  }
   return '"""""""""""""""""';
+}
 }
 
 
@@ -267,7 +179,7 @@ const iChooseYou = (name) => {
         player.hand.splice(0,1);
     }
   }
-  console.log(`I choose you! ${name}!`);
+  alert(`I choose you! ${name}!`);
 
   setTimeout(function(){computerChoosePokemon(randomNumber);},2000);
 
@@ -282,7 +194,15 @@ const computerChoosePokemon = (num) => {
   discarded.push(computer.hand[i]);
   computer.hand.splice(i,1);
   }
-  console.log(`Type "attack()" to have ${battleField[0].name} attack!`);
+  const order = () =>{
+  let command = prompt(`Would you like to have ${battleField[0].name} use the ${battleField[0].attack} attack? Type y/n`);
+  if (command !== "n") {
+    attack();
+  } else {
+    order();
+  }
+}
+order();
 }
 
 
@@ -326,20 +246,27 @@ const attack = () => {
   setTimeout(function(){discarded.push(battleField[0]);
   discarded.push(battleField[1]);
   battleField.splice(0,2);
-  console.log('Type "drawCard()" to draw another card!');},6000)
 
+  const playAgain = () => {
+    let chhooiice = prompt("would you like to draw again? type y/n")
+  if(chhooiice === "n"){
+    alert("Game Over!")
+  } else {
+    drawCard();
+  }
+}
+  playAgain()
+  },6000)
   return '""""""""""'
 }
 
-
-// THIS IS THE FLOW OF THE ACTUAL GAME THAT PROMPTS USERS TO PLAY WITHOUT TYPED FUNCTIONS
-
-console.log(`${computer.name} would like to battle!`);
-console.log('Please type "acceptBattle()" to begin!');
-console.log('""""""""""""""""');
-
 const acceptBattle = function() {
-  console.log(`${player.name} accepted the challenge! Let the battle begin!`);
-  console.log('Please type "drawCard()" to choose your Pokémon!');
+  alert(`${player.name} accepted the challenge! Let the battle begin!`);
+  drawCard()
   return '""""""""""""""""'
 }
+
+
+
+prompt(`${computer.name} would like to battle! Please type anything to accept!`);
+acceptBattle();
