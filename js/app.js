@@ -72,16 +72,25 @@ const scoreboard = {
     playerRoundsWon: 0,
     cpuScore: 0,
     computerRoundsWon: 0,
-    round: 1,
-
-     
-}
-const beginGame = () => {
-    console.log("Welcome to POKEMON let's play!")
+    round: 1,    
 }
 const startRound = () => {
     console.log(`${player.name} has ${scoreboard.playerScore} points, ${cpu.name} has ${scoreboard.cpuScore} points`)
     console.log(`ROUND ${scoreboard.round} BEGIN!`)   
+}
+const dealCards =() => {
+    dealPlayer();
+    console.log(player.name + " has been dealt " + player.hand[0].name);
+    dealCpu();
+    console.log(cpu.name + " has been dealt " + cpu.hand[0].name);
+    dealPlayer();
+    console.log(player.name + " has been dealt " + player.hand[1].name);
+    dealCpu();
+    console.log(cpu.name + " has been dealt " + cpu.hand[1].name);
+    dealPlayer();
+    console.log(player.name + " has been dealt " + player.hand[2].name);
+    dealCpu();
+    console.log(cpu.name + " has been dealt " + cpu.hand[2].name);
 }
  const dealRandomCard = () => {
          const maxCards = theCards.length;
@@ -89,53 +98,35 @@ const startRound = () => {
 }
  const dealPlayer = () => {
      return player.hand.push(theCards[dealRandomCard()])
- }
-//     Eggbert(the player) is dealt three random cards from the deck -
-// const dealPlayer = ()=> {
-    
-//     console.log(`${player.name} has been dealt:`)
-//     console.log(`${player.hand[0].name} - damage ${player.hand[1].damage}, ${player.hand[2].name} - damage ${player.hand[0].damage} and ${player.hand[0].name} - damage ${player.hand[0].damage}`)
-// }
-//     The computer is dealt three random cards from the deck -
-
-
-const playerChoose = () => {
-    console.log("PLAYER CHOOSE check for best card in hand arr chooses that card from hand")
-    bestCard = ""
-    for (i=0; i>player.hand.length; i++){
-        
-        if ([i].damage>[i].a.damage+1){
-            bestCard = [i].a;
-            console.log(bestCard)
-        }else {bestCard = ([i].a);
-        }
-        if (([i].a.damage+1) > ([i].a.damage +2)) {bestCard = ([i]+1).a
-        }else{bestCard = ([i].a.damage + 2)}
-    }
-    console.log(bestCard) 
-    player.chosenOne = bestCard;
+}
+ const dealCpu = () => {
+    return cpu.hand.push(theCards[dealRandomCard()]);
 }
 //     Eggbert chooses a card and plays it!It has a damage of 10. -
 const playerPlays = () => {
-    console.log( "PLAYER PLAYS console.log() player play....it has damage of...")
+    
+    player.chosenCard = player.hand[Math.floor(Math.random() * (player.hand.length - 0) + 0)];
+    console.log(player.name + " plays "+ player.chosenCard.name) 
 }
 //The computer randomly chooses a card and plays it!It has a damage of 8. -
 const cpuPlays = () => {
-    console.log('CPU PLAYS cpu plays math.random card it has damage of')
+    cpu.chosenCard = cpu.hand[Math.floor(Math.random() * (cpu.hand.length - 0) + 0)];
+    console.log( cpu.name +" plays " + cpu.chosenCard.name)
+
 }
 const roundWinner = () => {
 //     Eggbert wins!
 //"if/else Egberts choosen card > computer Math.random... "
 if (player.chosenCard > cpu.chosenCard){
     console.log(player.name + " wins this round!")
-    scoreboard.playerScore++
+    scoreboard.playerScore++;
 }
 else if (player.chosenCard === cpu.chosenCard){console.log("It's a tie!")
-        } else {  console.log(cpu.name + " wins this round!")
-                scoreboard.cpuScore++    
+        } else {console.log(cpu.name + " wins this round!")
+                scoreboard.cpuScore++;
+                 
     }
 }
-
 //     The score is displayed:
 //     -Score: Eggbert: 1, Computer: 0 -
 //     Rounds Won: Eggbert: 0, Computer: 0
@@ -143,75 +134,25 @@ const endRound = () => {
 console.log(`END OF ROUND ${scoreboard.round}`)
 player.hand = []
 scoreboard.round++
-
 }
+
 const gameOver = () => {
     console.log( "GAME OVER");
     console.log(scoreboard)
 }
-
-
-// They do this again two more times.
-// The round ends.
-
-// The score is displayed.
-// The rounds won are displayed.
-
-
-// ## The `game`
-// object
-
-
-// #### The game should be able to:
-
-//     1. keep a library of all the Pokemon cards that can be played(see the array in the "The Cards"
-//         section)
-// 2. know what cards have been played
-// 3. know how many cards are left to be played / dealt overall
-// 4. track points
-// for both the player and the computer
-// Note: Points are determined by the following: If the player 's card beats the computer'
-// s card, the player gets one point(and vice versa).If there is a tie, no one gets a point.
-// 5. track rounds
-// 6. track number of rounds won
-// for both player and computer
-// 7. automatically deal 3 cards from the library to the player and 3 cards to the computer each round
-// 8. determine the winner of each play
-// 9. stop once there are no cards left or not enough to deal 3 to each the player and computer
-
-
-// ## The `player`
-// object
-
-// ### The player should be able to:
-
-//     1. see their stats: their points and how many rounds they 've won.
-// 2. see what cards they have been dealt / see what cards are left in their hand
-// 3. pick a card from the hand that has been dealt to them(thereby playing this card agaist the computer 's card). The round ends once this has happened 3 times.
-//         4. receive new cards given to them by the game each round.5. see the cards that they have played in the past.
-
-
-//         ##The "UI"
-
-//         The user should see the following in the console:
-
-//         -the scoreboard after each round -
-//         the cards in the player 's hand -
-//         the cards in the computer 's hand -
-//         the cards that are in play -
-//         the winner of each round(or
-//             if there was a tie) -
-//         the winner of the game when the game is over -
-//         the final score when the game is over
+const beginGame = () => {
+    console.log("Welcome to POKEMON let's play!")
+while (scoreboard.round < 4) {
+        startRound()
+        dealCards();
+        playerPlays();
+        cpuPlays();
+        roundWinner();
+        endRound();
+    }
+    gameOver();
+}
 beginGame();
-startRound();
-playerChoose();
-playerPlays();
-cpuPlays();
-roundWinner();
-endRound();
-gameOver();
-
 
 
 // startGame(
