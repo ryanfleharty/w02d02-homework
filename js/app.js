@@ -60,16 +60,18 @@ const cards = [
 ]
 
 const player = {
-  score: 0
+  score: 0,
+  rounds: 0
 }
 
 const computer = {
-  score: 0
+  score: 0,
+  rounds: 0
 }
 
-const playerHand = [];
+let playerHand = [];
 
-const computerHand = [];
+let computerHand = [];
 
 const dealCards = () => {
  playerHand.unshift(cards.splice([Math.floor(Math.random() * cards.length)], 1));
@@ -86,7 +88,7 @@ const playerCard = [];
 
 const playerPlay = () => {
   playerCard.unshift(playerHand.splice([Math.floor(Math.random() * playerHand.length)], 1));
-  console.log("You played " + playerCard[0][0][0].name + " for " + playerCard[0][0][0].damage + " damage.");
+  console.log("You play " + playerCard[0][0][0].name + " for " + playerCard[0][0][0].damage + " damage.");
   cardsPlayed += 1;
 }
 
@@ -94,7 +96,7 @@ const computerCard = [];
 
 const computerPlay = () => {
   computerCard.unshift(computerHand.splice([Math.floor(Math.random() * computerHand.length)], 1));
-  console.log("The computer played " + computerCard[0][0][0].name + " for " + computerCard[0][0][0].damage + " damage.");
+  console.log("The computer plays " + computerCard[0][0][0].name + " for " + computerCard[0][0][0].damage + " damage.");
   cardsPlayed += 1;
 }
 
@@ -115,31 +117,51 @@ const compareCards = () => {
   }
 }
 
-const firstRound = () => {
-  while(cardsPlayed < 6){
-    dealCards();
+const playersBattle = () => {
     playerPlay();
     computerPlay();
     compareCards();
-  } if(cardsPlayed === 6) {
-    //remove elements from players hand arrays
-    //start new round
   }
-}
 
-firstRound();
+  const playRound = () => {
+    dealCards();
+    console.log("In your hand, you have " + playerHand[0][0].name + ", " + playerHand[1][0].name + ", and " + playerHand[2][0].name + ".");
+    console.log("In its hand, the computer has " + computerHand[0][0].name + ", " + computerHand[1][0].name + ", and " + computerHand[2][0].name + ".");
+    playersBattle();
+    playersBattle();
+    playersBattle();
+    if(player.score > computer.score) {
+      console.log("You win the round!");
+      player.rounds += 1;
+      player.score = 0;
+      computer.score = 0;
+    } else if(player.score < computer.score) {
+      console.log("You lose the round.");
+      computer.rounds += 1;
+      player.score = 0;
+      computer.score = 0;
+    } else {
+      console.log("The round is a tie!");
+      player.score = 0;
+      computer.score = 0;
+    }
+  }
 
-/**
-if(cardsPlayed === 2)
-//for empty function
+  const playGame = () => {
+    console.log("ROUND 1");
+    playRound();
+    console.log("ROUND 2");
+    playRound();
+    console.log("ROUND 3");
+    playRound();
+    console.log("The final score is " + player.rounds + " rounds to " + computer.rounds + " rounds.");
+    if(player.rounds > computer.rounds) {
+      console.log("Congratulations! You win!");
+    } else if(player.rounds < computer.rounds) {
+      console.log("Aww! You just lost to a computer!");
+    } else {
+      console.log("Well, would you look at that! A tie!");
+    }
+  }
 
-const winRound =
-
-const winGame = () => {
-  //after three rounds, determine score and declare winner
-  //If the rounds array >= 3, compare scores
-  //Identify player with greatest score
-  //Declare winner
-  //end game
-}
-**/
+  playGame();
