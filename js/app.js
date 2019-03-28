@@ -22,6 +22,7 @@ let poCards = [
   
 const theGame = {
   cardsInPlay: [],
+  rounds: [0, 1, 2]
 }
 const poPlayer = {
   poHandDealt: [],
@@ -117,7 +118,8 @@ reset();
 }
 playGame();
 
-// I am struggling with adding a stopping point for when the game runs out of pokemon cards.
+   // I am still trying to figure out how to implement a round limit, or a fail-safe to end the game
+   //before it runs out of pokemon cards. 
 
 
 // Pseudo
