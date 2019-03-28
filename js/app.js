@@ -66,12 +66,8 @@ const cpu = {
     collection: [],
 }
 const scoreboard = {
-    cardsPlayed: 0,
-    cardsRemaining: 0,
     playerScore: 0,
-    playerRoundsWon: 0,
     cpuScore: 0,
-    computerRoundsWon: 0,
     round: 1,    
 }
 const startRound = () => {
@@ -102,6 +98,14 @@ const dealPlayer = () => {
 const dealCpu = () => {
     return cpu.hand.push(theCards[dealRandomCard()]);
 }
+const clearHands = () => {
+    clear =
+    player.collection.push(player.hand[0], [1], [2]);
+    cpu.collection.push(cpu.hand[0], [1], [2]);
+    return clear
+// move player hands array to player collection array
+// move cpu hands array to cpu collection array
+}
 //Eggbert chooses a card and plays it!It has a damage of 10. -
 const playerPlays = () => {
     player.chosenCard = player.hand[Math.floor(Math.random() * (player.hand.length - 0) + 0)];
@@ -116,12 +120,12 @@ const cpuPlays = () => {
 const roundWinner = () => {
 //Eggbert wins!
 //"if/else Egberts choosen card > computer Math.random... "
-if (player.chosenCard > cpu.chosenCard){
-    console.log(player.name + " wins this round!")
+if (player.chosenCard.damage > cpu.chosenCard.damage){
+    console.log(player.name + " wins this round!");
     scoreboard.playerScore++;
 }
 else if (player.chosenCard === cpu.chosenCard){console.log("It's a tie!")
-        } else {console.log(cpu.name + " wins this round!")
+        } else {console.log(cpu.name + " wins this round!");
                 scoreboard.cpuScore++;
                  
     }
@@ -132,11 +136,13 @@ console.log(player, cpu)
 //     Rounds Won: Eggbert: 0, Computer: 0
 const endRound = () => {
 console.log(`END OF ROUND ${scoreboard.round}`)
-player.hand = []
+player.hand = [];
+clearHands();
 scoreboard.round++
 }
 const gameOver = () => {
     console.log( "GAME OVER");
+    scoreboard.round -1
     console.log(scoreboard)
 }
 const beginGame = () => {
