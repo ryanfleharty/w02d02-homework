@@ -1,32 +1,3 @@
-
-//create card factory to make new card objects
-//create player factory to make new players
-//write functions:
-    //alert("here are the rules. Are you ready?")
-    //***/deal()***
-        // math.random - choose 3 cards assign to player.dealt
-    //***/chooseAttack()***   
-        //prompt() "you have been dealt" + commonDeck.cardx.name , commonDeck.cardx2.name, commonDeck.cardx3.name " 
-        //"choose 1" - three if statements - if first;second;third
-                    //assign card to player.chosenCard
-                    //else,"thats not a card - choose a card"
-    //***/battle()***
-        //const cpuCard = Math.random CPU card store
-        //const playerCard = player.chosenCard
-        // 
-        // if (cpuCard > playerCard) {cpu.points++; Alert(name of card and damage current score play next round?)}
-        // else {add (player.points++; alert(same as above)
-        //==>text for alert() ==> "player.chosenCard.name + inflicted " + player.chosenCard.dammage 
-
-//(if rounds++ != 3){
-//deal()
-//chooseAttack()
-//battle() - rounds++
-//}
-//else {
-    //alert( "Game Over!" + player.name + "has "+ player.points+" points and "+cpu.name+ "has " +cpu.points+ " points"
-//}
-
 const theCards = [{
     name: "Bulbasaur",
     damage: 60
@@ -82,19 +53,19 @@ const theCards = [{
     name: "Weedle",
     damage: 40
 }]
-
-
- const player = {
+const player = {
     name: "Egbert",
     hand: [],
-    collection: [],
- }
- const cpu = {
+    chosenCard: {},
+    collection: [], 
+}
+const cpu = {
     name: "The Computer",
     hand: [],
+    chosenCard: {},
     collection: [],
- }
- const scoreboard = {
+}
+const scoreboard = {
     cardsPlayed: 0,
     cardsRemaining: 0,
     playerScore: 0,
@@ -102,31 +73,47 @@ const theCards = [{
     cpuScore: 0,
     computerRoundsWon: 0,
     round: 1,
+
      
 }
 const beginGame = () => {
     console.log("Welcome to POKEMON let's play!")
 }
-
 const startRound = () => {
     console.log(`${player.name} has ${scoreboard.playerScore} points, ${cpu.name} has ${scoreboard.cpuScore} points`)
-    console.log(`ROUND ${scoreboard.round} BEGIN!`)
-    
+    console.log(`ROUND ${scoreboard.round} BEGIN!`)   
 }
+ const dealRandomCard = () => {
+         const maxCards = theCards.length;
+         return Math.floor(Math.random() * (maxCards - 0) + 0);        
+}
+ const dealPlayer = () => {
+     return player.hand.push(theCards[dealRandomCard()])
+ }
 //     Eggbert(the player) is dealt three random cards from the deck -
-const dealPlayer = ()=> {
-    console.log("DEAL PLAYER deal 3 random cards from deck arr to egbert")
-    player.hand.push(theCards[0])
-    console.log(`${player.name} has been dealt:`)
-    console.log(`${player.hand[0].name} - damage ${player.hand[0].damage}, ${player.hand[0].name} - damage ${player.hand[0].damage} and ${player.hand[0].name} - damage ${player.hand[0].damage}`)
-}
+// const dealPlayer = ()=> {
+    
+//     console.log(`${player.name} has been dealt:`)
+//     console.log(`${player.hand[0].name} - damage ${player.hand[1].damage}, ${player.hand[2].name} - damage ${player.hand[0].damage} and ${player.hand[0].name} - damage ${player.hand[0].damage}`)
+// }
 //     The computer is dealt three random cards from the deck -
-const dealCpu = () => {
-    console.log("DEAL CPU deal 3 random cards from deck arr to cpu hand")
-}
+
 
 const playerChoose = () => {
     console.log("PLAYER CHOOSE check for best card in hand arr chooses that card from hand")
+    bestCard = ""
+    for (i=0; i>player.hand.length; i++){
+        
+        if ([i].damage>[i].a.damage+1){
+            bestCard = [i].a;
+            console.log(bestCard)
+        }else {bestCard = ([i].a);
+        }
+        if (([i].a.damage+1) > ([i].a.damage +2)) {bestCard = ([i]+1).a
+        }else{bestCard = ([i].a.damage + 2)}
+    }
+    console.log(bestCard) 
+    player.chosenOne = bestCard;
 }
 //     Eggbert chooses a card and plays it!It has a damage of 10. -
 const playerPlays = () => {
@@ -139,16 +126,28 @@ const cpuPlays = () => {
 const roundWinner = () => {
 //     Eggbert wins!
 //"if/else Egberts choosen card > computer Math.random... "
-    console.log( 'ROUND WINNER player with best damage wins!')
+if (player.chosenCard > cpu.chosenCard){
+    console.log(player.name + " wins this round!")
+    scoreboard.playerScore++
 }
+else if (player.chosenCard === cpu.chosenCard){console.log("It's a tie!")
+        } else {  console.log(cpu.name + " wins this round!")
+                scoreboard.cpuScore++    
+    }
+}
+
 //     The score is displayed:
 //     -Score: Eggbert: 1, Computer: 0 -
 //     Rounds Won: Eggbert: 0, Computer: 0
 const endRound = () => {
-console.log( 'END OF ROUND reset stuff, update scoreboard, start new round')
+console.log(`END OF ROUND ${scoreboard.round}`)
+player.hand = []
+scoreboard.round++
+
 }
 const gameOver = () => {
-    console.log( " No more rounds -- GAME OVER")
+    console.log( "GAME OVER");
+    console.log(scoreboard)
 }
 
 
@@ -206,13 +205,14 @@ const gameOver = () => {
 //         the final score when the game is over
 beginGame();
 startRound();
-dealPlayer();
-dealCpu();
 playerChoose();
 playerPlays();
 cpuPlays();
 roundWinner();
 endRound();
+gameOver();
+
+
 
 // startGame(
 // if (deck != deck[0].length){
