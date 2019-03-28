@@ -1,15 +1,5 @@
+// FINALIZED POKEMON HOMEWORK
 
-
-
-// keep a library of all the Pokemon cards that can be played (see the array in the "The Cards" section)
-// know what cards have been played
-// know how many cards are left to be played/dealt overall
-// track points for both the player and the computer Note: Points are determined by the following: If the player's card beats the computer's card, the player gets one point (and vice versa). If there is a tie, no one gets a point.
-// track rounds
-// track number of rounds won for both player and computer
-// automatically deal 3 cards from the library to the player and 3 cards to the computer each round
-// determine the winner of each play
-// stop once there are no cards left or not enough to deal 3 to each the player and computer
 deck = [
     {
       name: "Bulbasaur",
@@ -69,7 +59,6 @@ deck = [
   ];
 
   
-discard = []; // push into this when a card is played 
 
 const player = {
     name: "Eggbert",
@@ -129,23 +118,27 @@ battle = () => {
       };
       
 
-
-// see their stats: their points and how many rounds they've won.
-// see what cards they have been dealt/see what cards are left in their hand
-// pick a card from the hand that has been dealt to them (thereby playing this card agaist the computer's card). 
-    // The round ends once this has happened 3 times.
-// receive new cards given to them by the game each round.
-// see the cards that they have played in the past.
+let round = 0;
 
 startRound = () => {
-    dealThree(player); // randomly selects three cards from deck to whatever player is run through parameter
-    dealThree(computer);
-    for (i = 0; i <= computer.currentHand.length + 1; i++) {
-        chooseCard(player); // computer's card is generated, user's is supplied via prompt
-        chooseCard(computer);
-        battle(); // chosen cards are compared. Winner earns one point. Choose card again, then battle. Choose
-                // card again, then battle. THEN loop back to dealThree.
+    while (round < 3) {
+        dealThree(player); // randomly selects three cards from deck to whatever player is run through parameter
+        dealThree(computer);
+        for (i = 0; i <= computer.currentHand.length + 1; i++) {
+            chooseCard(player); 
+            chooseCard(computer);
+            battle(); // chosen cards are compared. Winner earns one point. Choose card again, then battle. Choose
+                    // card again, then battle. THEN loop back to dealThree.
+        };
+        round++;
+        if (player.wins > computer.wins) {
+            player.roundsWon++;
+        } else {
+            computer.roundsWon++;
+        }
+        console.log(`Round ${round} complete! Rounds won by Eggbert: ${player.roundsWon}, by Computer: ${computer.roundsWon}`);
     };
+    console.log(`FINAL SCORES: Eggbert: ${player.wins} Computer: ${computer.wins}`)
 };
 
 startRound();
