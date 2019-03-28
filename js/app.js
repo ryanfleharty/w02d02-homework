@@ -74,12 +74,12 @@ let playerHand = [];
 let computerHand = [];
 
 const dealCards = () => {
- playerHand.unshift(cards.splice([Math.floor(Math.random() * cards.length)], 1));
- playerHand.unshift(cards.splice([Math.floor(Math.random() * cards.length)], 1));
- playerHand.unshift(cards.splice([Math.floor(Math.random() * cards.length)], 1));
- computerHand.unshift(cards.splice([Math.floor(Math.random() * cards.length)], 1));
- computerHand.unshift(cards.splice([Math.floor(Math.random() * cards.length)], 1));
- computerHand.unshift(cards.splice([Math.floor(Math.random() * cards.length)], 1));
+  for(i = 0; i < 3; i++) {
+     playerHand.unshift(cards.splice([Math.floor(Math.random() * cards.length)], 1));
+  }
+  for(x = 0; x < 3; x++) {
+    computerHand.unshift(cards.splice([Math.floor(Math.random() * cards.length)], 1));
+  }
 }
 
 let cardsPlayed = 0;
@@ -127,9 +127,9 @@ const playersBattle = () => {
     dealCards();
     console.log("In your hand, you have " + playerHand[0][0].name + ", " + playerHand[1][0].name + ", and " + playerHand[2][0].name + ".");
     console.log("In its hand, the computer has " + computerHand[0][0].name + ", " + computerHand[1][0].name + ", and " + computerHand[2][0].name + ".");
-    playersBattle();
-    playersBattle();
-    playersBattle();
+    for(i = 0; i < 3; i++) {
+      playersBattle();
+    }
     if(player.score > computer.score) {
       console.log("You win the round!");
       player.rounds += 1;
