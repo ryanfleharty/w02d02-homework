@@ -1,10 +1,15 @@
 h1
 {
-	text-align: left;
+	text-align: center;
 	font-family: sans-serif;
 }
 p
 {
-	text-align: right;
+	text-align: left;
 	font-family: serif;
+}
+
+#deckdiv
+{
+	visibility: hidden;
 }

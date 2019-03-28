@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>w02d02-homework</title>
-	<link rel="stylesheet" type="text/css" href="" src="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 	<h1>"Pokemon" game</h1>
@@ -12,8 +12,20 @@
 		GitHub: keenmaster486<br>
 	</p>
 
-	<h2>Current State of the Deck:</h2>
-	<ul id="deck">
+	<button id="spoildeck" onclick="spoilDeck()">Spoil the deck (for debugging)</button>
+
+	<div id="deckdiv">
+		<h2>Current State of the Deck:</h2>
+		<ul id="decklist">
+		</ul>
+	</div>
+
+	<h2>Cards in player's hand:</h2>
+	<ul id = "playerhand">
+	</ul>
+
+	<h2>Cards in computer's hand:</h2>
+	<ul id = "comphand">
 	</ul>
 
 	<h2>The Scoreboard</h2>
