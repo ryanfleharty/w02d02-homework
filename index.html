@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>w02d02-homework</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<h1>"Pokemon" game</h1>
+	<hr>
+	<p>
+		Collin Brockway<br>
+		GitHub: keenmaster486<br>
+	</p>
+
+	<button id="spoildeck" onclick="spoilDeck()">Show contents of deck</button>
+	<button id="debugmsg" onclick="turnDebugMsgOn()">Turn console messages on</button>
+
+	<hr>
+
+	<button id="startgame" onclick="setUpGame()">Start new round</button>
+	<button id="resettable" onclick="resetTable()">Reset Table</button><br>
+
+	<hr>
+
+	<button id="playcardbutton1" onclick="cardPlay(0)">Play card 1</button><br>
+	<button id="playcardbutton2" onclick="cardPlay(1)">Play card 2</button><br>
+	<button id="playcardbutton3" onclick="cardPlay(2)">Play card 3</button><br>
+
+
+	<div id="deckdiv">
+		<h2>Current State of the Deck:</h2>
+		<ul id="decklist">
+		</ul>
+	</div>
+
+	<h1 id="mainmsg">Click Start to begin</h1>
+
+	<h2 id="playername">Cards in player's hand:</h2>
+	<ul id = "playerhand">
+	</ul>
+
+	<h2>Cards in computer's hand:</h2>
+	<ul id = "comphand">
+	</ul>
+
+	<h2>Cards on the table:</h2>
+	<ul id="table">
+	</ul>
+
+	<h2>The Scoreboard</h2>
+	<p id="scoreboard"></p>
+
+	<div id="debugmsgdiv">
+		<h2>Debug console</h2>
+		<p id="debugconsole"></p>
+	</div>
+
+	<script type="text/javascript" src="js/tagmap.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+</body>
+</html>
