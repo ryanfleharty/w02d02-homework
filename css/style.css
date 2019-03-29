@@ -12,4 +12,17 @@ p
 #deckdiv
 {
 	visibility: hidden;
+	background-color: lightgrey;
+	font-family: monospace;
+}
+
+#debugmsgdiv
+{
+	visibility: hidden;
+	background-color: lightgrey;
+	font-family: monospace;
+}
+#debugconsole
+{
+	font-family: monospace;
 }
