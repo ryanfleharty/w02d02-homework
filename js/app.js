@@ -76,17 +76,17 @@ const startRound = () => {
 }
 const dealCards =() => {
     dealPlayer();
-    console.log(player.name + " has been dealt " + player.hand[0].name +' '+ player.hand[0].damage);
+    console.log(player.name + " has been dealt " + player.hand[0].name +' damage: '+ player.hand[0].damage);
     dealCpu();
-    console.log(cpu.name + " has been dealt " + cpu.hand[0].name + ' ' + cpu.hand[0].damage);
+    console.log(cpu.name + " has been dealt " + cpu.hand[0].name + ' damage: ' + cpu.hand[0].damage);
     dealPlayer();
-    console.log(player.name + " has been dealt " + player.hand[1].name + ' ' + player.hand[1].damage);
+    console.log(player.name + " has been dealt " + player.hand[1].name + ' damage: ' + player.hand[1].damage);
     dealCpu();
-    console.log(cpu.name + " has been dealt " + cpu.hand[1].name + ' ' + cpu.hand[1].damage);
+    console.log(cpu.name + " has been dealt " + cpu.hand[1].name + ' damage: ' + cpu.hand[1].damage);
     dealPlayer();
-    console.log(player.name + " has been dealt " + player.hand[2].name + ' ' + player.hand[2].damage);
+    console.log(player.name + " has been dealt " + player.hand[2].name + ' damage: ' + player.hand[2].damage);
     dealCpu();
-    console.log(cpu.name + " has been dealt " + cpu.hand[2].name + ' ' + cpu.hand[2].damage);
+    console.log(cpu.name + " has been dealt " + cpu.hand[2].name + ' damage: ' + cpu.hand[2].damage);
 }
 const dealRandomCard = () => {
          const maxCards = theCards.length;
@@ -109,27 +109,30 @@ const clearHands = () => {
 //Eggbert chooses a card and plays it!It has a damage of 10. -
 const playerPlays = () => {
     player.chosenCard = player.hand[Math.floor(Math.random() * (player.hand.length - 0) + 0)];
-    console.log(player.name + " plays "+ player.chosenCard.name) 
+    console.log(player.name + " PLAYS " + player.chosenCard.name + " damage: " + player.chosenCard.damage) 
 }
 //The computer randomly chooses a card and plays it!It has a damage of 8. -
 const cpuPlays = () => {
     cpu.chosenCard = cpu.hand[Math.floor(Math.random() * (cpu.hand.length - 0) + 0)];
-    console.log( cpu.name +" plays " + cpu.chosenCard.name)
+    console.log(cpu.name + " PLAYS " + cpu.chosenCard.name + " damage: " + cpu.chosenCard.damage)
 
 }
 const roundWinner = () => {
 //Eggbert wins!
 //"if/else Egberts choosen card > computer Math.random... "
-if (player.chosenCard.damage > cpu.chosenCard.damage){
-    console.log(player.name + " wins this round!");
-    scoreboard.playerScore++;
-}
-else if (player.chosenCard === cpu.chosenCard){console.log("It's a tie!")
-        } else {console.log(cpu.name + " wins this round!");
-                scoreboard.cpuScore++;
-                 
+    if (player.chosenCard === cpu.chosenCard){
+        console.log("It's a tie!")
+        console.log(`Player Score: ${scoreboard.playerScore} `)
+        console.log(`Computer Score: ${scoreboard.cpuScore} `)
+    }else if (player.chosenCard.damage > cpu.chosenCard.damage){
+        console.log(`${player.chosenCard.name} damage:${player.chosenCard.damage} beats ${cpu.chosenCard.name} damage:${cpu.chosenCard.damage} `)
+        console.log(player.name + " wins this round!");
+        scoreboard.playerScore++;
+    }else {
+        console.log(`${cpu.chosenCard.name} damage:${cpu.chosenCard.damage} beats ${player.chosenCard.name} damage:${player.chosenCard.damage} `)
+        console.log(cpu.name + " wins this round!");
+        scoreboard.cpuScore++;       
     }
-console.log(player, cpu)
 }
 //     The score is displayed:
 //     -Score: Eggbert: 1, Computer: 0 -
@@ -142,8 +145,12 @@ scoreboard.round++
 }
 const gameOver = () => {
     console.log( "GAME OVER");
-    scoreboard.round -1
-    console.log(scoreboard)
+    scoreboard.round = scoreboard.round -1;
+    console.log(`Round ${scoreboard.round}`);
+    console.log(`Player Score: ${scoreboard.playerScore} `)
+    console.log(`Computer Score: ${scoreboard.cpuScore} `)
+
+
 }
 const beginGame = () => {
     console.log("Welcome to POKEMON let's play!");
