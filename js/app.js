@@ -165,12 +165,11 @@ const playGame = () => {
     for (let i = 0; i < 3; i++) {
         drawFromDeckPlayer();
         console.log(player.cardsDealt);
-
         drawFromDeckComp();
         console.log(computer.cardsDealt);
         playerChooses()
-        console.log(player); 
-        console.log(computer.cardsPlayed);
+        console.log(`Player chose: ${player.cardInPlay} `); 
+        console.log(`Computer chose: ${computer.cardInPlay}`);
         battle();
         console.log(`player: ${player.score}`); //check score and cardsPlayed
         console.log(`computer: ${computer.score} `);
