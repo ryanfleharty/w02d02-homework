@@ -170,13 +170,12 @@ const playGame = () => {
         console.log(computer.cardsDealt);
         playerChooses()
         console.log(player); 
-        console.log(computer);
+        console.log(computer.cardsPlayed);
         battle();
-        console.log(player); //check score and cardsPlayed
-        console.log(computer);
+        console.log(`player: ${player.score}`); //check score and cardsPlayed
+        console.log(`computer: ${computer.score} `);
     }
 }
-
     scoreCompare();
     reset();
 
