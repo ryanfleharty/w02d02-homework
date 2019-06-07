@@ -1,6 +1,6 @@
 console.log('running');
 
-const pokemon = [{
+const cards = [{
     name: "Bulbasaur",
     damage: 60
 }, {
@@ -55,17 +55,19 @@ const pokemon = [{
     name: "Weedle",
     damage: 40
 }];
-console.log(pokemon);
+console.log(cards);
 // Establishing both player and computer
 let drawn = [];
 const player = {
-    hand: [],
-    pokemon: '',
+    cardsDealt: [],
+    cardInPlay: [],
+    cardsPlayed: [],
     score: 0
 }
 const computer = {
-    hand: [],
-    pokemon: '',
+    cardsDealt: [],
+    cardInPlay: [],
+    cardsPlayed: [],
     score: 0
 }
 
@@ -74,21 +76,22 @@ const computer = {
 
 // The plan is to use the draw from Deck function 3 times and make another modified version of it to draw from the drawn cards.
 const drawFromDeckPlayer = () => {
-    // for (let i = a.length - 1; i > 0; i--) {
-        // I'm having trouble drawing  the objects from the array. 
-        let drawnCards = pokemon[Math.floor(Math.random() * pokemon.length)]; // Draws a random card from the pokemon Array
-        let deck = drawnCards
-        
-    player.hand.push(deck);
+    if (cards.length > 5) {
+        for (let i = 0; i < 3; i++) {
+            let randomCard = cards.splice(Math.floor(Math.random() * cards.length), 1);
+            player.cardsDealt.push(randomCard);
+        }
+    }
 }
 const drawFromDeckComp = () => {
-    // for (let i = a.length - 1; i > 0; i--) {
-
-    let drawnCards = pokemon[Math.floor(Math.random() * pokemon.length)]; // Draws a random card from the pokemon Array
-    let deck = drawnCards
-
-    Computer.hand.push(deck);
+    if (cards.length > 5) {
+        for (let i = 0; i < 3; i++) {
+            let randomCard = cards.splice(Math.floor(Math.random() * cards.length), 1);
+            computer.cardsDealt.push(randomCard);
+        }
+    }
 }
+
 const drawFromHandPlayer = () => {
     let drawnCards = player.hand[Math.floor(Math.random() * player.hand.length)]; // Draws a random card from the pokemon Array
     let deck = drawnCards;
@@ -106,47 +109,76 @@ const drawFromHandComp = () => {
 
 // Pick 3 pokemon cards function
 const computerChooses = () => {
-//     const randomIndex = Math.floor(Math.random() * pokemon.length);
-//     const computerPokemon = pokemon[randomIndex];
-//     computer.pokemon.push(computerPokemon);
-let drawn = computer.pokemon[Math.floor(Math.random() * pokemon.length)];
-    
-   }
-// console.log(computer.Pokemon);
-// }
-const playerChooses = () => {
-    //     const randomIndex = Math.floor(Math.random() * pokemon.length);
-    //     const playerPokemon = pokemon[randomIndex];
-    //     player.pokemon.push(playerPokemon);
-let drawn = player.pokemon[Math.floor(Math.random() * pokemon.length)];
-    player.pokemon = drawn;
-// player.choice = selected;
-}
-
-console.log(drawn);
-
-// rest round function
-const reset = () => {
-        const tryAgain = prompt("play again? y/n");
-        if (tryAgain === "y") {
-            startRound();
+        if (cards.length > 5){
+    for (let i = 0; i < 3; i++) {
+        let randomCard = cards.splice(Math.floor(Math.random() * cards.length), 1);
+        computer.cardsDealt.push(randomCard);
         }
     }
-// compare cards between player 1 and 2.
-const battle = () => {
-    if (player.pokemon.damage > computer.pokemon.damage) {
-        console.log(`${computer.pokemon.name} has fainted! You Win!`);
-        player.score++;
-    } else if (player.pokemon.damage < computer.pokemon.damage) {
-        console.log(`${player.pokemon.name} has fainted! You Lose!`);
-        computer.score++;
+}
+const playerChooses = () => {
+    player.cardInPlay = player.cardsDealt[Math.floor(Math.random() * player.cardsDealt.length)];
+    computer.cardInPlay = computer.cardsDealt[Math.floor(Math.random() * computer.cardsDealt.length)];
+}
+// rest round function
+const reset = () => {
+    const playAgain = prompt("Want to play again? y/n");
+    if (playAgain === "y") {
+        playGame();
+    } else {
+        console.log("Thanks for playing.")
     }
 }
-
-
+// compare cards between player 1 and 2.
+const battle = () => {
+    const playerDamage = player.cardInPlay[0].damage;
+    const computerDamage = computer.cardInPlay[0].damage;
+    if (playerDamage > computerDamage) {
+        console.log('You win!')
+        player.score++;
+    } else if (playerDamage < computerDamage) {
+        console.log('You lose!');
+        computer.score++;
+    } else {
+        console.log("It's a tie!");
+    }
+    player.cardsPlayed.push(player.cardInPlay);
+    computer.cardsPlayed.push(computer.cardInPlay);
+}
 // add score to the winner
 
 
+
+const scoreCompare = () => {
+    if (player.score > computer.score) {
+        console.log(`You won with ${player.score} points! Way to go!`);
+    } else if (player.score < computer.score) {
+        console.log(`Computer won with ${computer.score} points. Better luck next time.`);
+    } else {
+        console.log("It's a tie. You should play again.")
+    }
+}
+
+
+
+const playGame = () => {
+    for (let i = 0; i < 3; i++) {
+        drawFromDeckPlayer();
+        console.log(player.cardsDealt);
+
+        drawFromDeckComp();
+        console.log(computer.cardsDealt);
+        playerChooses()
+        console.log(player); 
+        console.log(computer);
+        battle();
+        console.log(player); //check score and cardsPlayed
+        console.log(computer);
+    }
+}
+
+    scoreCompare();
+    reset();
 
 const startGame = () => {
     computerChooses();
