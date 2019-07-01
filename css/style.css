@@ -15,7 +15,7 @@ nav {
 	color: #FFFFFF;
 	padding: 20px;
 	text-transform: uppercase;
-	font-family: 'Carnac', arial, sans-serif;
+	font-family: 'Raleway', arial, sans-serif;
 }
 
 a {
@@ -83,7 +83,7 @@ footer {
 }
 
 img {
-	width: 200px;
+	width: 175px;
   image-rendering: auto;
   image-rendering: crisp-edges;
 	image-rendering: pixelated;

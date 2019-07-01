@@ -32,11 +32,11 @@ let pokemonLib = [
   }, {
     name: 'Nidoran - female',
     damage: 60,
-    cardImage: 'images/NidoranFemale.png',
+    cardImage: 'images/nidoranfemale.png',
   }, {
     name: 'Nidoran - male',
     damage: 50,
-    cardImage: 'images/NidoranMale.png',
+    cardImage: 'images/nidoranmale.png',
   }, {
     name: 'Oddish',
     damage: 40,
@@ -95,6 +95,24 @@ const forceRedraw = (element) => {
   element.style.display = disp;
 };
 
+// Vanilla JS scroll to element function to snap to a location from stack overflow
+function scrollTo(element, to, duration) {
+  if (duration <= 0) return;
+  let difference = to - element.scrollTop;
+  let perTick = difference / duration * 10;
+
+  setTimeout(function() {
+    element.scrollTop = element.scrollTop + perTick;
+    if (element.scrollTop === to) return;
+    scrollTo(element, to, duration - 10);
+  }, 10);
+}
+
+// jquery to scroll to element function to snap to a location from stack overflow
+function scrollToElement(ele) {
+  $(window).scrollTop(ele.offset().top).scrollLeft(ele.offset().left);
+}
+
 /* Fisher-Yates (or Knuth) Shuffle algorithm
  * Randomly shuffle an array
  * https://stackoverflow.com/a/2450976/1293256
@@ -151,7 +169,7 @@ function checkForWinner(playerCard, computerCard) {
     playNext.innerHTML = 'Click here to PLAY NEXT ROUND';
     playNext.style.opacity = 1.0;
     playNext.style.pointerEvents = 'auto';
-    setTimeout(forceRedraw(playNext), 500);
+    setTimeout(forceRedraw(playNext), 100);
     if (player.score > computer.score) {
       message = 'Congratulations, you have won the round. Please click the below "PLAY NEXT ROUND" button to proceed.';
       commsBar.style.color = 'green';
@@ -171,7 +189,7 @@ function checkForWinner(playerCard, computerCard) {
     playNext.innerHTML = 'Please Refresh to Play Again';
     playNext.style.opacity = 0.4;
     playNext.style.pointerEvents = 'none';
-    setTimeout(forceRedraw(playNext), 500);
+    setTimeout(forceRedraw(playNext), 100);
     if (player.roundsWon > computer.roundsWon || (player.roundsWon === computer.roundsWon && player.score > computer.score)) {
       message = 'Congratulations, you have won the final round AND the game! Please refresh the browser to play again.';
       commsBar.style.color = 'green';
@@ -192,7 +210,7 @@ function checkForWinner(playerCard, computerCard) {
     playNext.innerHTML = 'Click a Player Card below to Play';
     playNext.style.opacity = 0.4;
     playNext.style.pointerEvents = 'none';
-    setTimeout(forceRedraw(playNext), 500);
+    setTimeout(forceRedraw(playNext), 100);
     if (playerCard.damage > computerCard.damage) {
       message = `You attacked with "${playerCard.name}" for ${playerCard.damage}, which was stronger than the computer's "${computerCard.name}" attack of ${computerCard.damage}, so you get a point!`;
       commsBar.style.color = 'green';
@@ -210,7 +228,9 @@ function checkForWinner(playerCard, computerCard) {
   }
   commsBar.innerHTML = message;
   console.log(message);
-  setTimeout(forceRedraw(commsBar), 500);
+  setTimeout(forceRedraw(commsBar), 100);
+  //scrollTo(document.body, (commsBar.offsetTop - 10), 600);
+  scrollToElement($(commsBar));
 }
 
 function flipComputerCard() {
@@ -247,6 +267,8 @@ function flipComputerCard() {
       setTimeout(checkForWinner(game.cardsPlayed[4], game.cardsPlayed[5]));
     };
   }
+  //scrollTo(document.body, (commsBar.offsetTop - 10), 600); // scroll to CommsBar
+  scrollToElement($(commsBar)); // scroll to CommsBar
 }
 
 function choosePlayerCard() {
@@ -260,21 +282,23 @@ function choosePlayerCard() {
 
   this.setAttribute('src', player.cards[cardId].cardImage);
   this.style.backgroundColor = 'green';
-  sleep(1000);
+  //sleep(500);
   this.style.opacity = 0.4;
   this.style.pointerEvents = 'none';
 
+  //const randomComputerDelay = Math.random() * 3000;
+
   if (game.cardsPlayed.length === 1) {
     this.onload = function check() {
-      setTimeout(flipComputerCard());
+      setTimeout(flipComputerCard());//, randomComputerDelay);
     };
   } else if (game.cardsPlayed.length === 3) {
     this.onload = function check() {
-      setTimeout(flipComputerCard());
+      setTimeout(flipComputerCard());//, randomComputerDelay);
     };
   } else if (game.cardsPlayed.length === 5) {
     this.onload = function check() {
-      setTimeout(flipComputerCard());
+      setTimeout(flipComputerCard());//, randomComputerDelay);
     };
   }
 }
@@ -308,14 +332,15 @@ const createBoard = (numCards) => {
     // cardElement.addEventListener('click', flipComputerCard);
     document.getElementById('computer-board').appendChild(cardElement);
   }
+
+  playNext.style.pointerEvents = 'none';
+  playNext.style.opacity = 0.4;
+  playNext.InnerHTML = 'Click a Player Card below to Play';
 };
 
 const playNextRound = () => {
   commsBar.InnerHTML = 'Good Luck!';
-  playNext.style.pointerEvents = 'none';
-  playNext.style.opacity = 0.4;
-  playNext.InnerHTML = 'Click a Player Card below to Play';
-  setTimeout(forceRedraw(commsBar), 1000);
+  setTimeout(forceRedraw(commsBar), 100);
 
   game.cardsPlayed = [];
   player.score = 0;
